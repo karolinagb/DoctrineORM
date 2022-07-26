@@ -29,3 +29,10 @@ $thales = $alunoRepository->findOneBy([
     'nome' => 'Thales'
 ]);
 var_dump($thales);
+
+/** @var Aluno[]$alunosAsc */
+$alunosAsc = $alunoRepository->findBy([], ['nome' => 'ASC'], 2, 3);
+
+foreach($alunosAsc as $aluno){
+    echo "\nComeça aqui:" . $aluno->getNome() . "\n";
+}
