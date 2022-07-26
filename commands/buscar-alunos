@@ -1,0 +1,31 @@
+<?php
+
+use Alura\Doctrine\Entity\Aluno;
+use Alura\Doctrine\Helper\EntityManagerFactory;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$entityManagerFactory = new EntityManagerFactory();
+$entityManager = $entityManagerFactory->getEntityManager();
+
+//O entityManager tem acesso a um repositório de Alunos e assim consigo pegar todos
+$alunoRepository = $entityManager->getRepository(Aluno::class);
+//Esse repositório de aluno obtido, nos permite buscar os mesmos do banco
+/** @var Aluno[]$alunoList */  //Temos que fazer isso para que ele entenda que essa variavel é do tipo aluno, assim ele me dá o autocomplete e consigo
+//acessar $aluno->getNome() mais facilmente no foreach
+$alunoList = $alunoRepository->findAll();
+
+foreach ($alunoList as $aluno) {
+    //Para termos acesso a método dentro de uma string, rodeamos com {}
+    echo "ID: {$aluno->getId()}\nNome: {$aluno->getNome()}\n\n";
+}
+
+$alexandra = $alunoRepository->find(4);
+echo $alexandra->getNome() . PHP_EOL . PHP_EOL;
+
+//findBy = retorna um registro de acordo com critérios de busca em uma array - retorna um array
+//findOneBy = retorna um registro de acordo com critérios de busca em uma array - retorna um objeto do tipo Aluno
+$thales = $alunoRepository->findOneBy([
+    'nome' => 'Thales'
+]);
+var_dump($thales);
