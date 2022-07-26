@@ -1,0 +1,25 @@
+<?php
+
+use Alura\Doctrine\Entity\Aluno;
+use Alura\Doctrine\Helper\EntityManagerFactory;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$entityManagerFactory = new EntityManagerFactory();
+$entityManager = $entityManagerFactory->getEntityManager();
+
+//Quando vamos buscar um dado só, não precisamos de um repositório
+// $alunoRepository = $entityManager->getRepository(Aluno::class);
+
+$id = $argv[1];
+$novoNome = $argv[2];
+
+//Podemos usar o find do entity manager que recebe como parâmetro o nome da classe e o id
+// $aluno = $alunoRepository->find($id);
+$aluno = $entityManager->find(Aluno::class, $id);
+$aluno->setNome($novoNome);
+
+//Como já buscamos essa entidade com o doctrine, não preciso usar o persist para anexar ela ao doctrine
+//Ela já está sendo observada por ele
+//$entityManager->persist($aluno);
+$entityManager->flush();
