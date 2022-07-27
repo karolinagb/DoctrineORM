@@ -10,5 +10,9 @@
         "psr-4": {
             "Alura\\Doctrine\\": "src/"
         }
+    },
+    "scripts":
+    {
+        "doctrine": "php vendor\\bin\\doctrine"
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Alura\Doctrine\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 //Dizendo que a classe é uma entidade para o doctrine
 /**
  * @Entity
@@ -23,6 +26,18 @@ class Aluno
      */
     private string $nome;
 
+    //Definindo que esse campo de telefone é uma relação de 1-N entre aluno-telefone
+    //targetEntity = informa a qual entidade essa relação está ligada
+    //mappedBy campo que mapeia o relacionamento em Telefone
+    /**@OneToMany(targetEntity="Telefone", mappedBy="aluno") */
+    private $telefones;
+
+    public function __construct()
+    {
+        //O doctrine oferece uma biblioteca de coleções
+        $this->telefones = new ArrayCollection();
+    }
+
     public function getId() : int
     {
         return $this->id;
@@ -42,5 +57,24 @@ class Aluno
         //$aluno->setNome('Teste')->getId();
 
         return $this;
+    }
+
+    public function addTelefone(Telefone $telefone): self
+    {
+        $this->telefones->add($telefone);
+
+        //definindo o relacionamento do telefone com esse aluno atual
+        $telefone->setAluno($this);
+
+        //Dessa forma consigo adicionar telefones de forma encadeada
+        return $this;
+    }
+
+    //Esse método não retorna um array collection porque quando os dados vierem do banco e eu já tiver telefones cadastrados
+    //que foram buscados pelo doctrine ele retorna outro tipo de coleção
+    //ArrayCollection implementa Collection que é qualquer coleção, então colocamos isso para aceitar qualquer que retornar
+    public function getTelefones(): Collection
+    {
+        return $this->telefones;
     }
 }
