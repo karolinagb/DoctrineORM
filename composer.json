@@ -1,8 +1,8 @@
 {
     "require": {
-        "doctrine/orm": "^2.12",
-        "doctrine/dbal": "^2.13",
-        "doctrine/annotations": "^1.13",
+        "doctrine/orm": "^2.11",
+        "doctrine/dbal": "^3.2",
+        "doctrine/annotations": "^1.13.2",
         "symfony/yaml": "^5.4",
         "symfony/cache": "^5.4"
     },
@@ -10,9 +10,5 @@
         "psr-4": {
             "Alura\\Doctrine\\": "src/"
         }
-    },
-    "scripts":
-    {
-        "doctrine": "php vendor\\bin\\doctrine"
     }
 }

@@ -153,7 +153,7 @@ class ComposerStaticInit0d69db0cfd7f89968d0bf928c99a7f3e
         ),
         'Doctrine\\DBAL\\' => 
         array (
-            0 => __DIR__ . '/..' . '/doctrine/dbal/lib/Doctrine/DBAL',
+            0 => __DIR__ . '/..' . '/doctrine/dbal/src',
         ),
         'Doctrine\\Common\\Lexer\\' => 
         array (
