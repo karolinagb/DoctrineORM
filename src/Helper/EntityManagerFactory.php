@@ -4,15 +4,14 @@
 
 namespace Alura\Doctrine\Helper;
 
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 
 class EntityManagerFactory
 {
     //Para o doctrine conseguir mapear nossas entidades, ele precisa de um gerenciador de entidades
     //getEntityManager = vai criar e retornar um EntityManager
-    public function getEntityManager() : EntityManagerInterface
+    public function getEntityManager() : EntityManager
     {
         $rootDir = __DIR__ . '/../..';
 
@@ -22,7 +21,7 @@ class EntityManagerFactory
             //[$rootDir . '/src'] = podemos ter mais de um lugar onde ele busca as anotações
                 //Uma anotação no php é com /** @nomeDaAnotação */
             //true = dizer se está em modo de desenvolvimento ou não (perde performace mas me dá mais informações)
-        $config = Setup::createAnnotationMetadataConfiguration([$rootDir . '/src'], true);
+        $config = ORMSetup::createAttributeMetadataConfiguration([$rootDir . '/src'], true);
 
         $connection = [
             'driver' => 'pdo_sqlite', //driver de qual banco ele vai se comunicar
