@@ -17,7 +17,7 @@ $novoNome = $argv[2];
 //Podemos usar o find do entity manager que recebe como parâmetro o nome da classe e o id
 // $aluno = $alunoRepository->find($id);
 $aluno = $entityManager->find(Aluno::class, $id);
-$aluno->setNome($novoNome);
+$aluno->nome= $novoNome;
 
 //Como já buscamos essa entidade com o doctrine, não preciso usar o persist para anexar ela ao doctrine
 //Ela já está sendo observada por ele
