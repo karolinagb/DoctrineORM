@@ -9,7 +9,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $entityManagerFactory = new EntityManagerFactory();
 $entityManager = $entityManagerFactory->getEntityManager();
 
-$aluno = new Aluno('Karolina Bento');
+$aluno = new Aluno($argv[1]);
 
 // persist = coloca a entidade como observada, se em algum momento nós formos no banco, ela será adicionada
 $entityManager->persist($aluno);
