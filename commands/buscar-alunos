@@ -41,3 +41,10 @@ foreach($alunosAsc as $aluno){
 
 echo "\nQuantidade de alunos cadastrados:\n";
 echo $alunoRepository->count([]) . PHP_EOL; //executar o count diretamente é mais leve do que buscar com o findAll antes
+
+echo "\nAlunos ordenados em forma ascendente por nome:\n";
+/** @var Aluno[]$alunosAscNome */
+$alunosAscNome = $alunoRepository->findBy([], ['nome' => 'ASC']);
+foreach ($alunosAscNome as $aluno) {
+    echo $aluno->nome . PHP_EOL; 
+}
