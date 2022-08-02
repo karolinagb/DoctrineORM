@@ -17,15 +17,17 @@ $alunoList = $alunoRepository->findAll();
 
 foreach ($alunoList as $aluno) {
     //Para termos acesso a método dentro de uma string, rodeamos com {}
-    echo "ID: {$aluno->getId()}\nNome: {$aluno->getNome()}\n\n";
+    echo "ID: $aluno->id\nNome: $aluno->nome\n\n";
 }
 
+echo "\nAluna 4:\n";
 $alexandra = $alunoRepository->find(4);
-echo $alexandra->getNome() . PHP_EOL . PHP_EOL;
+echo $alexandra->nome . PHP_EOL . PHP_EOL;
 
-//findBy = retorna um registro de acordo com critérios de busca em uma array - retorna um array
-//findOneBy = retorna um registro de acordo com critérios de busca em uma array - retorna um objeto do tipo Aluno
+// //findBy = retorna um registro de acordo com critérios de busca em uma array - retorna um array
+// //findOneBy = retorna um registro de acordo com critérios de busca em uma array - retorna um objeto do tipo Aluno-se eu quiser buscar só o primeiro q satisfaz a condição
 $thales = $alunoRepository->findOneBy([
+    //campo - valor
     'nome' => 'Thales'
 ]);
 var_dump($thales);
@@ -34,5 +36,8 @@ var_dump($thales);
 $alunosAsc = $alunoRepository->findBy([], ['nome' => 'ASC'], 2, 3);
 
 foreach($alunosAsc as $aluno){
-    echo "\nComeça aqui:" . $aluno->getNome() . "\n";
+    echo "\nComeça aqui:" . $aluno->nome . "\n";
 }
+
+echo "\nQuantidade de alunos cadastrados:\n";
+echo $alunoRepository->count([]) . PHP_EOL; //executar o count diretamente é mais leve do que buscar com o findAll antes
