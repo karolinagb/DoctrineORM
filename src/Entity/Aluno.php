@@ -19,7 +19,7 @@ class Aluno
     #[Id]
     #[GeneratedValue]
     #[Column]
-    public readonly int $id;
+    public int $id;
 
     //Definindo que esse campo de telefone é uma relação de 1-N entre aluno-telefone
     //targetEntity = informa a qual entidade essa relação está ligada
