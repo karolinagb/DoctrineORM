@@ -32,7 +32,7 @@ class Aluno
     public function __construct(
         //nao preciso informar o tipo da column pq a propriedade ja tem tipo
         #[Column]
-        public string $nome)
+        public readonly string $nome)
     {
         //O doctrine oferece uma biblioteca de coleções
         //$this->telefones = new ArrayCollection();
