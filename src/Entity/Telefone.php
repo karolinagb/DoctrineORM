@@ -2,42 +2,25 @@
 
 namespace Alura\Doctrine\Entity;
 
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
+
+#[Entity]
+#[Table('Telefones')]
 class Telefone
 {
-    private int $id;
-   
-    private string $numero;
+    #[Id]
+    #[GeneratedValue]
+    #[Column]
+    public int $id;
 
-    private $aluno;
-
-    public function getId() : int
+    public function __construct(
+        #[Column]
+        public readonly string $numero)
     {
-        return $this->id;
-    }
-
-    public function setId(int $id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getNumero() : string
-    {
-        return $this->numero;
-    }
-
-    public function setNumero(string $numero)
-    {
-        $this->numero = $numero;
-
-        return $this;
-    }
-
-    //Caso 
-    public function getAluno() : Aluno
-    {
-        return $this->aluno;
     }
 
     public function setAluno(Aluno $aluno): self
