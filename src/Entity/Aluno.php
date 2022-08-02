@@ -5,6 +5,8 @@ namespace Alura\Doctrine\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,15 +18,17 @@ class Aluno
     //Dizendo que o atributo id é um identificador único no banco
     //GeneratedValue = valor que vai ser gerado sozinho
     //@Column(type="integer") = passando o tipo do dado
-    #[Id]
-    #[GeneratedValue]
-    #[Column]
+    #[Id, GeneratedValue, Column]
     public int $id;
-
-    //Definindo que esse campo de telefone é uma relação de 1-N entre aluno-telefone
-    //targetEntity = informa a qual entidade essa relação está ligada
-    //mappedBy campo que mapeia o relacionamento em Telefone
-    private $telefones;
+  
+    //iterable = qualquer coisa q eu consiga fazer foreach
+    //#[OneToMany] = relacionamento 1 -N
+        //targetEntity = com quem está se relacionando
+        //mappedBy = diz que esse relacionamento 1 aluno para N telefones está sendo mapeado pela propriedade aluno da classe Telefone
+    #[OneToMany(targetEntity: Telefone::class, mappedBy: "aluno")]
+    // private iterable $telefones;
+        //posso colocar como readonly pois não estamos modificando telefones, mas chamando o método add desse objeto
+    private readonly Collection $telefones;
 
     //atualização do php 8
         //promoção de propriedades
@@ -34,41 +38,21 @@ class Aluno
         #[Column]
         public readonly string $nome)
     {
+        //Sempre que tivermos 1-N ou N-N essa associação para muitos precisa ser inicializada com uma coleção do doctrine
         //O doctrine oferece uma biblioteca de coleções
-        //$this->telefones = new ArrayCollection();
+        $this->telefones = new ArrayCollection();
     }
 
-    // public function getId() : int
-    // {
-    //     return $this->id;
-    // }
+    public function addTelefone(Telefone $telefone): self
+    {
+        $this->telefones->add($telefone);
 
-    // public function getNome() : string
-    // {
-    //     return $this->nome;
-    // }
+        //adicionando o aluno atual a esse telefone
+        $telefone->setAluno($this);
 
-    //Quando ele retornar uma instância para o próprio objeto, colocamos q ele retorna self
-    // public function setNome(string $nome) : self
-    // {
-    //     $this->nome = $nome;
-    //     //Isso server para quando eu definir o nome eu já conseguir chamar outro método dessa classe
-    //     //$aluno = new Aluno();
-    //     //$aluno->setNome('Teste')->getId();
-
-    //     return $this;
-    // }
-
-    // public function addTelefone(Telefone $telefone): self
-    // {
-    //     $this->telefones->add($telefone);
-
-    //     //definindo o relacionamento do telefone com esse aluno atual
-    //     $telefone->setAluno($this);
-
-    //     //Dessa forma consigo adicionar telefones de forma encadeada
-    //     return $this;
-    // }
+        //Dessa forma consigo adicionar telefones de forma encadeada
+        return $this;
+    }
 
     // //Esse método não retorna um array collection porque quando os dados vierem do banco e eu já tiver telefones cadastrados
     // //que foram buscados pelo doctrine ele retorna outro tipo de coleção
