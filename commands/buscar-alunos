@@ -1,6 +1,7 @@
 <?php
 
 use Alura\Doctrine\Entity\Aluno;
+use Alura\Doctrine\Entity\Telefone;
 use Alura\Doctrine\Helper\EntityManagerFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -48,9 +49,12 @@ $alunosAscNome = $alunoRepository->findBy([], ['nome' => 'ASC']);
 foreach ($alunosAscNome as $aluno) {
     echo $aluno->nome . PHP_EOL; 
     echo "\nTelefones:\n";
-    foreach($aluno->getTelefones() as $telefone){
-        echo $telefone->numero . PHP_EOL;
-    }
+
+    echo implode(',', $aluno->getTelefones()->map(fn (Telefone $telefone) => $telefone->numero)->toArray());
+    
+    // foreach($aluno->getTelefones() as $telefone){
+    //     echo $telefone->numero . PHP_EOL;
+    // }
 
     echo PHP_EOL;
 }
