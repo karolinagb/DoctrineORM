@@ -6,7 +6,9 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\OneToOne;
+use Alura\Doctrine\Entity\Telefone;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -31,6 +33,9 @@ class Aluno
         //posso colocar como readonly pois não estamos modificando telefones, mas chamando o método add desse objeto
     private Collection $telefones;
 
+    #[ManyToMany(targetEntity: Curso::class, inversedBy: "alunos")]
+    private Collection $cursos;
+
     //atualização do php 8
         //promoção de propriedades
         //crio ela e elas já são inicializadas
@@ -45,6 +50,7 @@ class Aluno
             //doctrine já armazenada no banco, então devido essa alteração automática na hora de persistir,
             //essa propriedade não pode ser readonly
         $this->telefones = new ArrayCollection();
+        $this->cursos = new ArrayCollection();
     }
 
     public function addTelefone(Telefone $telefone): self
@@ -66,5 +72,12 @@ class Aluno
     public function getTelefones(): Collection
     {
         return $this->telefones;
+    }
+
+    /**
+     * @return Collection<Curso> */
+    public function getCursos(): Collection
+    {
+        return $this->cursos;
     }
 }
