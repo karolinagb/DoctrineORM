@@ -28,7 +28,7 @@ class Aluno
     #[OneToMany(targetEntity: Telefone::class, mappedBy: "aluno")]
     // private iterable $telefones;
         //posso colocar como readonly pois não estamos modificando telefones, mas chamando o método add desse objeto
-    private readonly Collection $telefones;
+    private Collection $telefones;
 
     //atualização do php 8
         //promoção de propriedades
@@ -40,6 +40,9 @@ class Aluno
     {
         //Sempre que tivermos 1-N ou N-N essa associação para muitos precisa ser inicializada com uma coleção do doctrine
         //O doctrine oferece uma biblioteca de coleções
+        //obs: quando adiciono os telefones ele deixa de ser arrayCollection e passa a ser outra coleção do
+            //doctrine já armazenada no banco, então devido essa alteração automática na hora de persistir,
+            //essa propriedade não pode ser readonly
         $this->telefones = new ArrayCollection();
     }
 
@@ -57,8 +60,10 @@ class Aluno
     // //Esse método não retorna um array collection porque quando os dados vierem do banco e eu já tiver telefones cadastrados
     // //que foram buscados pelo doctrine ele retorna outro tipo de coleção
     // //ArrayCollection implementa Collection que é qualquer coleção, então colocamos isso para aceitar qualquer que retornar
-    // public function getTelefones(): Collection
-    // {
-    //     return $this->telefones;
-    // }
+    /**
+     * @return Collection<Telefone> */
+    public function getTelefones(): Collection
+    {
+        return $this->telefones;
+    }
 }

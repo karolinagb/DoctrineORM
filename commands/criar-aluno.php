@@ -1,6 +1,7 @@
 <?php
 
 use Alura\Doctrine\Entity\Aluno;
+use Alura\Doctrine\Entity\Telefone;
 use Alura\Doctrine\Helper\EntityManagerFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -9,7 +10,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $entityManagerFactory = new EntityManagerFactory();
 $entityManager = $entityManagerFactory->getEntityManager();
 
-$aluno = new Aluno($argv[1]);
+$telefone1 = new Telefone('(11) 999648816');
+$telefone2 =  new Telefone('(24) 24456617');
+
+$entityManager->persist($telefone1);
+$entityManager->persist($telefone2);
+
+$aluno = new Aluno('Aluno com telefones');
+$aluno->addTelefone($telefone1)->addTelefone($telefone2);
 
 // persist = coloca a entidade como observada, se em algum momento nós formos no banco, ela será adicionada
 $entityManager->persist($aluno);
