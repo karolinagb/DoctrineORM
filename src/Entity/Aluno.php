@@ -25,7 +25,8 @@ class Aluno
     //#[OneToMany] = relacionamento 1 -N
         //targetEntity = com quem está se relacionando
         //mappedBy = diz que esse relacionamento 1 aluno para N telefones está sendo mapeado pela propriedade aluno da classe Telefone
-    #[OneToMany(targetEntity: Telefone::class, mappedBy: "aluno")]
+        //cascade = define que alguma operação vai ser realizada em cascata, ou seja, quando for realizada em aluno, vai ser realizada em telefone
+    #[OneToMany(targetEntity: Telefone::class, mappedBy: "aluno", cascade:["persist", "remove"])]
     // private iterable $telefones;
         //posso colocar como readonly pois não estamos modificando telefones, mas chamando o método add desse objeto
     private Collection $telefones;

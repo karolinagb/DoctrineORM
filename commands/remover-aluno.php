@@ -22,6 +22,7 @@ if(is_null($aluno)){
 //pois o doctrine não vai no banco para buscar
 //Se criarmos um aluno do zero sem salvar no banco, o remove não funciona porque nao e uma entidade gerenciada pelo doctrine
 // $aluno = $entityManager->getPartialReference(Aluno::class, $id);
+    //obs:getPartialReference não vem com o relacionamento carregado
 
 $entityManager->remove($aluno);
 

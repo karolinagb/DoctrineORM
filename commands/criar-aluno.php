@@ -10,14 +10,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $entityManagerFactory = new EntityManagerFactory();
 $entityManager = $entityManagerFactory->getEntityManager();
 
-$telefone1 = new Telefone('(11) 999648816');
-$telefone2 =  new Telefone('(24) 24456617');
-
-$entityManager->persist($telefone1);
-$entityManager->persist($telefone2);
-
-$aluno = new Aluno('Aluno com telefones');
-$aluno->addTelefone($telefone1)->addTelefone($telefone2);
+$aluno = new Aluno('Aluno com telefones cascade');
+$aluno->addTelefone(new Telefone('(11) 999648816'))->addTelefone(new Telefone('(24) 24456617'));
 
 // persist = coloca a entidade como observada, se em algum momento nós formos no banco, ela será adicionada
 $entityManager->persist($aluno);
