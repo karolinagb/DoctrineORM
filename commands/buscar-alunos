@@ -1,6 +1,7 @@
 <?php
 
 use Alura\Doctrine\Entity\Aluno;
+use Alura\Doctrine\Entity\Curso;
 use Alura\Doctrine\Entity\Telefone;
 use Alura\Doctrine\Helper\EntityManagerFactory;
 
@@ -14,47 +15,58 @@ $alunoRepository = $entityManager->getRepository(Aluno::class);
 //Esse repositório de aluno obtido, nos permite buscar os mesmos do banco
 /** @var Aluno[]$alunoList */  //Temos que fazer isso para que ele entenda que essa variavel é do tipo aluno, assim ele me dá o autocomplete e consigo
 //acessar $aluno->getNome() mais facilmente no foreach
-$alunoList = $alunoRepository->findAll();
+// $alunoList = $alunoRepository->findAll();
 
-foreach ($alunoList as $aluno) {
-    //Para termos acesso a método dentro de uma string, rodeamos com {}
-    echo "ID: $aluno->id\nNome: $aluno->nome\n\n";
-}
+// foreach ($alunoList as $aluno) {
+//     //Para termos acesso a método dentro de uma string, rodeamos com {}
+//     echo "ID: $aluno->id\nNome: $aluno->nome\n\n";
+// }
 
-echo "\nAluna 4:\n";
-$alexandra = $alunoRepository->find(4);
-echo $alexandra->nome . PHP_EOL . PHP_EOL;
+// echo "\nAluna 4:\n";
+// $alexandra = $alunoRepository->find(4);
+// echo $alexandra->nome . PHP_EOL . PHP_EOL;
 
-// //findBy = retorna um registro de acordo com critérios de busca em uma array - retorna um array
-// //findOneBy = retorna um registro de acordo com critérios de busca em uma array - retorna um objeto do tipo Aluno-se eu quiser buscar só o primeiro q satisfaz a condição
-$thales = $alunoRepository->findOneBy([
-    //campo - valor
-    'nome' => 'Thales'
-]);
-var_dump($thales);
+// // //findBy = retorna um registro de acordo com critérios de busca em uma array - retorna um array
+// // //findOneBy = retorna um registro de acordo com critérios de busca em uma array - retorna um objeto do tipo Aluno-se eu quiser buscar só o primeiro q satisfaz a condição
+// $thales = $alunoRepository->findOneBy([
+//     //campo - valor
+//     'nome' => 'Thales'
+// ]);
+// var_dump($thales);
 
-/** @var Aluno[]$alunosAsc */
-$alunosAsc = $alunoRepository->findBy([], ['nome' => 'ASC'], 2, 3);
+// /** @var Aluno[]$alunosAsc */
+// $alunosAsc = $alunoRepository->findBy([], ['nome' => 'ASC'], 2, 3);
 
-foreach($alunosAsc as $aluno){
-    echo "\nComeça aqui:" . $aluno->nome . "\n";
-}
+// foreach($alunosAsc as $aluno){
+//     echo "\nComeça aqui:" . $aluno->nome . "\n";
+// }
 
-echo "\nQuantidade de alunos cadastrados:\n";
-echo $alunoRepository->count([]) . PHP_EOL; //executar o count diretamente é mais leve do que buscar com o findAll antes
+// echo "\nQuantidade de alunos cadastrados:\n";
+// echo $alunoRepository->count([]) . PHP_EOL; //executar o count diretamente é mais leve do que buscar com o findAll antes
 
-echo "\nAlunos ordenados em forma ascendente por nome:\n";
+// echo "\nAlunos ordenados em forma ascendente por nome:\n";
 /** @var Aluno[]$alunosAscNome */
 $alunosAscNome = $alunoRepository->findBy([], ['nome' => 'ASC']);
+
+echo PHP_EOL . "Começa aqui" . PHP_EOL;
 foreach ($alunosAscNome as $aluno) {
+
     echo $aluno->nome . PHP_EOL; 
-    echo "\nTelefones:\n";
 
-    echo implode(',', $aluno->getTelefones()->map(fn (Telefone $telefone) => $telefone->numero)->toArray());
-    
-    // foreach($aluno->getTelefones() as $telefone){
-    //     echo $telefone->numero . PHP_EOL;
-    // }
+    if($aluno->getTelefones()->count() > 0){
+        echo "Telefones:\n";
 
+         // foreach($aluno->getTelefones() as $telefone){
+        //     echo $telefone->numero . PHP_EOL;
+        // }
+        echo implode(',', $aluno->getTelefones()->map(fn (Telefone $telefone) => $telefone->numero)->toArray());
+    }
+
+    if($aluno->getCursos()->count() > 0){
+        echo "Cursos:\n";
+        echo implode(',', $aluno->getCursos()->map(fn (Curso $curso) => $curso->nome)->toArray());
+    }
+
+    echo PHP_EOL;
     echo PHP_EOL;
 }
