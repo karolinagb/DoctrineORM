@@ -64,6 +64,8 @@ foreach ($alunosAscNome as $aluno) {
 
     if($aluno->getCursos()->count() > 0){
         echo "Cursos:\n";
+        //O map devolve uma coleção de números de telefones, ou seja, uma coleção de strings. O toArray transforma essa coleção em 
+        //um array do PHP e o implode une os itens desse array com vírgula para nós podermos exibir no terminal.
         echo implode(',', $aluno->getCursos()->map(fn (Curso $curso) => $curso->nome)->toArray());
     }
 
