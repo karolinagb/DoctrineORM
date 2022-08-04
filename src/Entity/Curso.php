@@ -36,4 +36,12 @@ class Curso
     {
         return $this->alunos;
     }
+
+    public function addAluno(Aluno $aluno): void
+    {
+        if(!$this->alunos->contains($aluno)){
+            $this->alunos->add($aluno);
+            $aluno->matricularEmCurso($this);
+        }
+    }
 }

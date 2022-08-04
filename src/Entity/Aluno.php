@@ -80,4 +80,13 @@ class Aluno
     {
         return $this->cursos;
     }
+
+    public function matricularEmCurso(Curso $curso): void
+    {
+         //Para resolver problema de recurssão infinita
+        if(!$this->cursos->contains($curso)){
+            $this->cursos->add($curso);
+            $curso->addAluno($this);
+        }
+    }
 }
